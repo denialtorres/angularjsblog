@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="blog.css" rel="stylesheet">
+  </head>
+  <body ng-controller="AddPostCtrl">
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="blog-nav">
+          <a class="blog-nav-item" href="#">Home</a>
+          <a class="blog-nav-item active" href="addPost.html">Add Post</a>
+        </nav>
+      </div>
+    </div>
+    <style media="screen">
+      .ql-editor {
+            height: 200px;
+          }
+
+
+}
+    </style>
+    <div class="container">
+      <form class="form-horizontal"  ng-submit="AddPost()">
+        <fieldset>
+          <!-- Form Name -->
+          <legend>Create Post</legend>
+
+          <!-- Text Input -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="txtTitle">Title</label>
+            <div class="col-md-4">
+              <input id="txtTitle" ng-model="article.title" name="txtTitle" type="text" placeholder="placeholder" class="form-control input-md">
+            </div>
+          </div>
+
+          <!-- Text Area -->
+          <div class="form-group">
+            <label class="col-md-4- control-label" for="txtPost">Post</label>
+            <div class="cold-md-4">
+              <ng-quill-editor ng-model="article.post" id="txtPost" name="txtPost" rows="8" cols="80"></ng-quill-editor>
+            </div>
+          </div>
+          <!-- image title !-->
+          <input type='file' ng-model='article.imageurl' multiple accept="image/*, .zip" require base-sixty-four-input>
+          {{article.title}}
+          {{article.post}}
+          <div class="container">
+          <h2>Rounded Corners</h2>
+          <p>The .img-rounded class adds rounded corners to an image (not available in IE8):</p>
+          <img data-ng-src="data:image/png;base64,{{article.imageurl[0].base64}}" data-err-src="images/png/avatar.png" class="img-rounded" alt="Cinque Terre" width="304" height="236"/>
+        </div>
+          <!-- Button -->
+          <div class="form-group">
+            <label class="col-md-4 control-label" for="singlebutton"></label>
+              <div class="col-md-4">
+                <input id="singlebutton" ng-disabled="!article.title || !article.post" name="singlebutton" class="btn btn-primary" type="submit" value="Publish" />
+              </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+      <!-- /.container -->
+
+    <div class="blog-footer">
+      <p>AngularJS & Firebase Blog App</p>
+    </div>
+  </body>
+</html>
