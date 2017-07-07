@@ -12,7 +12,7 @@ angular.module('myApp.home',['ngRoute','firebase', 'ngQuill', 'ngSanitize', 'nai
 
 
 //Home Controller
-.controller('HomeCrtl', function($scope, $firebaseObject, $firebaseAuth, $location, CommonProp){
+.controller('HomeCrtl', function($scope, $firebaseObject, $firebaseAuth, $location, CommonProp, $rootScope){
 
  // This is important for initialize variables
  $scope.username = CommonProp.getUser();
@@ -45,7 +45,7 @@ angular.module('myApp.home',['ngRoute','firebase', 'ngQuill', 'ngSanitize', 'nai
 
 
 //Service for store data login
-.service('CommonProp', function(){
+.service('CommonProp', function($location, $firebaseAuth, $rootScope){
   console.log('Estas en CommonProp')
   var user = '';
 
@@ -59,6 +59,26 @@ angular.module('myApp.home',['ngRoute','firebase', 'ngQuill', 'ngSanitize', 'nai
     setUser: function(value){
       localStorage.setItem("userEmail", value)
       user = value;
+    },
+    logoutUser: function(){
+      //log out user
+      var auth = $firebaseAuth();
+      firebase.auth().signOut().then(function() {
+      console.log('Sign-out successful')
+      }, function(error) {
+      console.log('An error happened.')
+      });
+      console.log('done logout');
+      user= '';
+      localStorage.removeItem('userEmail');
+      $location.path('/home');
+    },
+    isLogged: function(){
+      //verify if user is logged in blog
+      if (localStorage.getItem("userEmail") === null) {
+      console.log('No Existe');
+      $location.path('/home');
+      }
     }
   }
 })

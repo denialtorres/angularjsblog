@@ -13,18 +13,14 @@
   .modal-backdrop.fade.in {
     z-index: initial;
   }
-
-  input[type=file]{
-    width:90px;
-    color:transparent;
-  }
   </style>
   <body ng-controller="WelcomeCtrl">
     <div class="blog-masthead">
       <div class="container">
         <nav class="blon-nav">
-          <a class="blog-nav-intem active" href="#">Home</a>
+          <a class="blog-nav-item active" href="#">Home</a>
           <a class="blog-nav-item" href="#/addPost">Add Post</a>
+          <a class="blog-nav-item" style="cursor:pointer;" ng-click="logout()">Log Out</a>
         </nav>
       </div>
     </div>
@@ -62,7 +58,7 @@
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">Post:</label>
-                            <textarea class="form-control" id="message-text" ng-model="postToUpdate.text"></textarea>
+                            <ng-quill-editor ng-model="postToUpdate.text" id="txtPost" name="txtPost" rows="8" cols="80"></ng-quill-editor>
                         </div>
                     </form>
                 </div>

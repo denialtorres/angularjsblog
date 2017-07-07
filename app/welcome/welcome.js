@@ -12,7 +12,8 @@ angular.module('myApp.welcome', ['ngRoute'])
 .controller('WelcomeCtrl', function($rootScope, $scope,CommonProp, $firebaseArray, $firebaseObject, $firebase ){
 console.log('Estas en WelcomeCtrl');
 
-//$scope.username = CommonProp.getUser();
+CommonProp.isLogged();
+
 
 function openPopup(){
   $('#editModal').modal();
@@ -67,6 +68,11 @@ $scope.deletePost = function(){
   }, function(error){
     console.log("Error: ", error);
   });
+}
+
+
+$scope.logout = function(){
+    CommonProp.logoutUser();
 }
 
 });

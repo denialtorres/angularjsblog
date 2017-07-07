@@ -4,7 +4,8 @@ angular.module('myApp', [
   'ngRoute',
   'myApp.home',
   'myApp.welcome',
-  'myApp.addPost' //Newly added home module
+  'myApp.addPost',
+  'myApp.blog' //Newly added home module
 ]).
 config(['$routeProvider', function($routeProvider){
   //Routes will be here

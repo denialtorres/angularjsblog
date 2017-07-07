@@ -10,17 +10,19 @@ angular.module('myApp.addPost', ['ngRoute'])
 }])
 
 .controller('AddPostCrl', ['$scope', '$firebase','CommonProp', '$location', '$firebaseArray', function($scope, $firebase,CommonProp, $location, $firebaseArray){
-  console.log(CommonProp.getUser());
-  console.log('Hola')
+  CommonProp.isLogged();
 
 
   $scope.AddPost = function(){
     var ref = firebase.database().ref('Articles/');
     var list = $firebaseArray(ref)
+    console.log('vas a publicar articulo')
+
+    //imageurl: $scope.article.imageur,
 
     list.$add({title: $scope.article.title,
               text: $scope.article.post,
-              imageurl: $scope.article.imageurl,
+              imageurl: '',
               emailId: CommonProp.getUser()}).then(function(ref){
       var id = ref.key;
       console.log("added record with id " + id)
@@ -42,6 +44,10 @@ angular.module('myApp.addPost', ['ngRoute'])
           var theSplit = a.value.split('\\');
           fileLabel.innerHTML = theSplit[theSplit.length-1];
       }
+  }
+
+  $scope.logout = function(){
+    CommonProp.logoutUser();
   }
 
 }]);
