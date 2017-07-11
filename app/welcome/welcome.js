@@ -9,10 +9,10 @@ angular.module('myApp.welcome', ['ngRoute'])
   });
 }])
 
-.controller('WelcomeCtrl', function($rootScope, $scope,CommonProp, $firebaseArray, $firebaseObject, $firebase ){
+.controller('WelcomeCtrl', function($rootScope, $scope,CommonProp, $firebaseArray, $firebaseObject, $firebase, $location ){
 console.log('Estas en WelcomeCtrl');
 
-CommonProp.isLogged();
+//console.log(CommonProp.isLogged());
 
 
 function openPopup(){
@@ -73,6 +73,16 @@ $scope.deletePost = function(){
 
 $scope.logout = function(){
     CommonProp.logoutUser();
+}
+
+$scope.gotoArticle=function(id){
+    console.log('estas aqui')
+    console.log(id)
+   $location.path("/articulo/"+id)
+}
+
+$scope.isAdmin = function(){
+  return CommonProp.isAdmin()
 }
 
 });

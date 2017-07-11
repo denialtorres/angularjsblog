@@ -13,86 +13,192 @@
   .modal-backdrop.fade.in {
     z-index: initial;
   }
+
+  @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro|Open+Sans:300);
+
+*, *:before, *:after { @include box-sizing(border-box) }
+
+.title{
+	font-family: Open Sans, sans-serif;
+	font-size: 55px;
+	font-style: bold;
+	text-align: center;
+}
+
+nav{
+	font-family: Open Sans, sans-serif;
+	text-align: center;
+	word-spacing: 30px;
+}
+
+nav a{
+	text-decoration: none;
+	color: #CAD3E0;
+}
+
+
+.container {
+  text-align: center;
+}
+
+ul.blog-post {
+	list-style: none;
+	font-size: 0px;
+	margin-left: -2.5%;
+}
+
+ul.blog-post li {
+	display: inline-block;
+  border-radius: 3px;
+	padding: 1.5em;
+  width: 400px;
+	margin: 0 0 2.5% 2.5%;
+	background: #fff;
+	border: 1px solid #eee;
+	font-size: 16px;
+	font-size: 1rem;
+	vertical-align: top;
+	box-shadow: 0 0 6px #eee;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+ul.blog-post li img {
+	max-width: 100%;
+	height: auto;
+	margin: 0 0 10px;
+}
+
+ul.blog-post li h3 {
+	margin: 0.6em 0 0.6em;
+  text-align: left!important;
+  font-family: Source Sans Pro, sans-serif;
+  color: #333;
+}
+
+ul.blog-post li p {
+  margin: 0.6em 0 1.3em;
+	line-height: 1.5em;
+	color: #8c8c8c;
+  text-align: left!important;
+  font-family: Open Sans, sans-serif;
+  font-weight: 300;
+}
+
+.button {
+  text-align: center;
+  width: 20%;
+  border: none;
+  background: #36B3A8;
+  font-family: Open Sans, sans-serif;
+  font-weight: 300;
+  color: white;
+  border-radius: 5px;
+  padding: 8px 15px 8px 15px;
+}
+
+.button:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+ul.blog-post.columns-2 li {
+	width: 37%;
+}
+
+@media (max-width: 480px) {
+	ul.grid-nav li {
+		display: block;
+		margin: 0 0 5px;
+	}
+	ul.grid-nav li a {
+		display: block;
+	}
+	ul.blog-post {
+		margin-left: 0;
+	}
+	ul.blog-post li {
+		width: 100% !important;
+		margin: 0 0 20px;
+	}
+}
+
+footer{
+	font-family: Open Sans, sans-serif;
+	text-align: center;
+}
   </style>
   <body ng-controller="WelcomeCtrl">
-    <div class="blog-masthead">
-      <div class="container">
-        <nav class="blon-nav">
-          <a class="blog-nav-item active" href="#">Home</a>
-          <a class="blog-nav-item" href="#/addPost">Add Post</a>
-          <a class="blog-nav-item" style="cursor:pointer;" ng-click="logout()">Log Out</a>
-        </nav>
-      </div>
-    </div>
-    <div class="container">
-      <div class="page-header">
-        <h1>Blog</h1>
-      </div>
-      <p class="lead">Welcome home <b>{{username}}</b> !!</p>
-      <p class="lead">Welcome Home!!</p>
-      <div class="list-group" ng-repeat="article in articles">
-        <a href="#" onclick="return false;" class="list-group-item active">
-          <h4 class="list-group-item-heading">{{article.title}}</h4>
-          <div ng-bind-html="article.text">{{article.text}}</div>
-          <span class="pull-right">
-            <button class="btn btn-xs btn-info"  ng-click="editPost(article.$id)" data-target="#editModal">EDIT</button>
-            <button class="btn btn-xs btn-warning" ng-click="confirmDelete(article.$id)" data-target="#deleteModal" >DELETE</button>
-          </span>
-        </a>
-      </div>
+               <div class="title animated fadeInDown" id="title">
+                         Blog
+               </div>
+                <nav ng-hide="isAdmin() == 'notAdmin'">
+                  <div id="navigation">
+                   <a href="#">Home</a>
+                   <a href="#/addPost" style="word-spacing:1px">Add Post</a>
+                   <a href="#" style="cursor:pointer;" ng-click="logout()">Salir</a>
+                 </div>
+                </nav>
+               <div class="container">
+                 <ul class="blog-post columns-2">
+                   <li ng-repeat="article in articles">
+                     <img data-ng-src="data:image/png;base64,{{article.imageurl}}" data-err-src="images/png/avatar.png" class="img-rounded" alt="Cinque Terre" width="100%"/>
+                     <span>{{article.fecha | date:'dd MMMM yyyy'}}</span>
+                     <h3>{{article.title}}</h3>
+                     <!-- <p ng-bind-html="article.text">{{article.extract}}</p> -->
+                      <p ng-bind-html="article.extract">{{article.text}}</p>
+                     <div class="button" ng-click="gotoArticle(article.$id)">Leer Mas</div>
+                     <span class="pull-right" ng-hide="isAdmin() == 'notAdmin'" >
+                       <button class="btn btn-xs btn-info"  ng-click="editPost(article.$id)" data-target="#editModal">EDIT</button>
+                       <button class="btn btn-xs btn-warning" ng-click="confirmDelete(article.$id)" data-target="#deleteModal" >DELETE</button>
+                     </span>
+                   </li>
+                 </ul>
+               </div>
 
-      <!-- Model -->
-      <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                    </button>
-                    <h4 class="modal-title" id="editModalLabel">Update Post</h4>
-                </div>
-                <div class="modal-body">
-                    <form role="form">
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label">Title:</label>
-                            <input type="text" class="form-control" ng-model="postToUpdate.title" id="recipient-name">
-                        </div>
-                        <div class="form-group">
-                            <label for="message-text" class="control-label">Post:</label>
-                            <ng-quill-editor ng-model="postToUpdate.text" id="txtPost" name="txtPost" rows="8" cols="80"></ng-quill-editor>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" ng-click="update()">Publish</button>
-                </div>
-            </div>
-        </div>
-    </div>
+               <!-- Modal -->
+               <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                 <div class="modal-dialog">
+                     <div class="modal-content">
+                         <div class="modal-header">
+                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                             </button>
+                             <h4 class="modal-title" id="editModalLabel">Update Post</h4>
+                         </div>
+                         <div class="modal-body">
+                             <form role="form">
+                                 <div class="form-group">
+                                     <label for="recipient-name" class="control-label">Title:</label>
+                                     <input type="text" class="form-control" ng-model="postToUpdate.title" id="recipient-name">
+                                 </div>
+                                 <div class="form-group">
+                                     <label for="message-text" class="control-label">Post:</label>
+                                     <ng-quill-editor ng-model="postToUpdate.text" id="txtPost" name="txtPost" rows="8" cols="80"></ng-quill-editor>
+                                 </div>
+                             </form>
+                         </div>
+                         <div class="modal-footer">
+                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                             <button type="button" class="btn btn-primary" ng-click="update()">Publish</button>
+                         </div>
+                     </div>
+                 </div>
+             </div>
 
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" style="text-align:center;">
-                    <h4 class="modal-title" style="color:red;" id="deleteModalLabel">You are going to Delete this post forever !!</h4>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" ng-click="deletePost()">Delete</button>
-                </div>
-            </div>
-        </div>
-    </div>
+             <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                 <div class="modal-dialog">
+                     <div class="modal-content">
+                         <div class="modal-header" style="text-align:center;">
+                             <h4 class="modal-title" style="color:red;" id="deleteModalLabel">You are going to Delete this post forever !!</h4>
+                         </div>
+                         <div class="modal-footer">
+                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                             <button type="button" class="btn btn-primary" ng-click="deletePost()">Delete</button>
+                         </div>
+                     </div>
+                 </div>
+             </div>
 
-
-    </div>
-
-    <footer class="footer">
-      <div class="container">
-        <p class="text-muted">
-
-        </p>
-      </div>
-    </footer>
-  </body>
+     </body>
 </html>

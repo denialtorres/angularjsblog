@@ -79,7 +79,13 @@ angular.module('myApp.home',['ngRoute','firebase', 'ngQuill', 'ngSanitize', 'nai
       console.log('No Existe');
       $location.path('/home');
       }
-    }
+    },
+   isAdmin: function(){
+     if (localStorage.getItem("userEmail") === null)
+       return 'notAdmin'
+     else
+       return 'Admin'
+   }
   }
 })
 

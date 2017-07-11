@@ -1,0 +1,70 @@
+<style>
+@import url(https://fonts.googleapis.com/css?family=Oswald|Roboto:400);
+@import url(http://weloveiconfonts.com/api/?family=brandico);
+
+/* brandico */
+[class*="brandico-"]:before {
+  font-family: 'brandico', sans-serif;
+  font-size: 1.5em;
+  transition: .5s color;
+}
+.brandico-facebook:hover {
+  color: #3b5998;
+}
+.brandico-twitter-bird:hover {
+  color: #00acee;
+}
+.brandico-tumblr:hover {
+  color: #34526f;
+}
+.brandico-linkedin:hover {
+  color: #0e76a8;
+}
+html {
+  margin: .5em 20%;
+  color: #0a0a0a;
+}
+header {
+  font-family: "Oswald";
+  text-transform: uppercase;
+}
+header h1 {
+  font-size: 2em;
+  border-bottom: .2em solid;
+}
+header p {
+  font-size: 1.3em;
+}
+#content {
+  font-family: "Roboto";
+}
+#share {
+  border-top: .2em solid;
+}
+#share p {
+  font-family: "Oswald";
+  font-size: 1.4em;
+  text-transform: uppercase;
+}
+#share a {
+  text-decoration: none;
+  color: #0a0a0a;
+}
+</style>
+<article>
+  <header>
+    <img style="width: 50%" data-ng-src="data:image/png;base64,{{post.imageurl}}" data-err-src="images/png/avatar.png" class="img-rounded" alt="Cinque Terre" width="100%"/>
+    <h1>{{post.title}}</h1>
+    <p>Por Jack Bauer en {{post.fecha | date:'dd MMMM yyyy'}}</p>
+  </header>
+  <div id="content">
+    <div ng-bind-html="post.text">{{post.text}}</div>
+  </div>
+  <div id="share">
+    <p>Share this Post on <a href="#"><span class="brandico-facebook"></span></a>&nbsp;<a href="#"><span class="brandico-twitter-bird"></span></a>&nbsp;<a href="#"><span class="brandico-tumblr"></span></a>&nbsp;<a href="#"><span class="brandico-linkedin"></span></a></p>
+  </share>
+</article>
+<div id="fb-root"></div>
+  <div ng-if="fbComments">
+    <div class="fb-comments" fb-comment-box page-href="{{fbComments}}" data-numposts="5" data-colorscheme="light" data-width="100%"></div>
+  </div>

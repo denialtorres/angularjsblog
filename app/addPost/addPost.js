@@ -14,15 +14,21 @@ angular.module('myApp.addPost', ['ngRoute'])
 
 
   $scope.AddPost = function(){
+    console.log('hola')
     var ref = firebase.database().ref('Articles/');
     var list = $firebaseArray(ref)
     console.log('vas a publicar articulo')
 
     //imageurl: $scope.article.imageur,
 
+    var extract = $scope.article.post.replace(/(([^\s]+\s\s*){50})(.*)/,"$1…");
+    console.log(extract);
+
     list.$add({title: $scope.article.title,
               text: $scope.article.post,
-              imageurl: '',
+              imageurl: $scope.article.imageurl[0].base64,
+              extract: $scope.article.extract,
+              fecha: new Date().getTime(),
               emailId: CommonProp.getUser()}).then(function(ref){
       var id = ref.key;
       console.log("added record with id " + id)
