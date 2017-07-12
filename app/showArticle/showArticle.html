@@ -64,7 +64,4 @@ header p {
     <p>Share this Post on <a href="#"><span class="brandico-facebook"></span></a>&nbsp;<a href="#"><span class="brandico-twitter-bird"></span></a>&nbsp;<a href="#"><span class="brandico-tumblr"></span></a>&nbsp;<a href="#"><span class="brandico-linkedin"></span></a></p>
   </share>
 </article>
-<div id="fb-root"></div>
-  <div ng-if="fbComments">
-    <div class="fb-comments" fb-comment-box page-href="{{fbComments}}" data-numposts="5" data-colorscheme="light" data-width="100%"></div>
-  </div>
+<div class="fb-comments" dyn-fb-comment-box page-href="{{curPath}}" data-numposts="5" data-colorscheme="light" data-width="100%"></div>
